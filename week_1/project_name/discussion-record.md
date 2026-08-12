@@ -1,0 +1,1 @@
+Platform	Community or account	Link	My first contribution	Human answer	My next answer	Design change
