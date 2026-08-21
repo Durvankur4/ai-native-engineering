@@ -2,7 +2,7 @@
 
 ## 1. The Problem Statement
 
-An AI agent observes a request to use an AI model or API. The current behavior of that model/API, and whether it has changed relative to a known baseline, may be unknown.
+An automated system for detecting statistically significant behavioral drift in deployed LLM/API services by repeatedly evaluating fixed probe prompts and comparing current responses against historical behavioral baselines.
 
 The agent must make a decision from incomplete and imperfect evidence:
 
