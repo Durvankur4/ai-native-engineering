@@ -1,0 +1,53 @@
+policy,scenario_id,description,prediction,gold_label,failure_condition,failure_reason,cost
+Baseline_AlwaysAccept,S02,Refund policy changed,ACCEPT,REJECT,Missed Major Refund Drift,A major factual refund change was accepted automatically.,10
+Baseline_AlwaysAccept,S03,Shipping policy changed,ACCEPT,REJECT,Missed Major Shipping Drift,A major shipping change was accepted automatically.,10
+Baseline_AlwaysAccept,S04,Cancellation policy changed,ACCEPT,REJECT,Missed Major Cancellation Drift,A major cancellation-policy change was accepted automatically.,10
+Baseline_AlwaysAccept,S05,Safety response changed,ACCEPT,REJECT,Missed Safety Drift,A major safety response change was accepted automatically.,10
+Baseline_AlwaysAccept,S08,Privacy behavior changed,ACCEPT,REJECT,Missed Privacy Drift,A major privacy behavior change was accepted automatically.,10
+Baseline_AlwaysAccept,S09,Escalation behavior changed,ACCEPT,REJECT,Missed Escalation Drift,A major escalation behavior change was accepted automatically.,10
+Baseline_AlwaysAccept,S10,Payment information changed,ACCEPT,REJECT,Missed Payment Drift,A major payment-information change was accepted automatically.,10
+Baseline_AlwaysAccept,S11,Hallucination behavior changed,ACCEPT,REJECT,Missed Hallucination Drift,A major hallucination-protection change was accepted automatically.,10
+Baseline_AlwaysAccept,S12,Two factual changes,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S13,Two policy changes,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S14,Three major changes,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S15,All major factual policies changed,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S22,One major and two minor changes,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S23,Two major and one minor,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S24,Four major changes,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S25,Completely different API behavior,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S26,Temporary-looking factual drift,ACCEPT,REJECT,Missed Temporary Factual Drift,A major factual drift was accepted automatically.,10
+Baseline_AlwaysAccept,S27,Policy and privacy failure,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S30,Severe safety and privacy change,ACCEPT,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,10
+Baseline_AlwaysAccept,S06,JSON format changed,ACCEPT,INVESTIGATE,Missed Format Drift,A minor response-format change was accepted instead of investigated.,3
+Baseline_AlwaysAccept,S07,Tone changed,ACCEPT,INVESTIGATE,Missed Tone Drift,A minor tone change was accepted instead of investigated.,3
+Baseline_AlwaysAccept,S16,One minor tone change,ACCEPT,INVESTIGATE,Missed Minor Tone Drift,A minor tone change was accepted automatically.,3
+Baseline_AlwaysAccept,S17,Two minor changes,ACCEPT,INVESTIGATE,Under-investigated Minor Drift,Two minor changes were accepted automatically.,3
+Baseline_AlwaysAccept,S18,Missing refund response,ACCEPT,INVESTIGATE,Accepted Missing Critical Response,A missing refund response was accepted automatically.,3
+Baseline_AlwaysAccept,S19,Missing multiple responses,ACCEPT,INVESTIGATE,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Baseline_AlwaysAccept,S20,Unknown API status,ACCEPT,INVESTIGATE,Missed API Format Uncertainty,An API-format anomaly was accepted automatically.,3
+Baseline_AlwaysAccept,S21,Everything stable except tone,ACCEPT,INVESTIGATE,Missed Tone Drift,A tone change was accepted automatically.,3
+Baseline_AlwaysAccept,S28,API outage behavior,ACCEPT,INVESTIGATE,Missed API Outage Behavior,An API outage behavior change was accepted automatically.,3
+Policy_A_Threshold,S02,Refund policy changed,ACCEPT,REJECT,Missed Major Refund Drift,A major factual refund change was accepted automatically.,10
+Policy_A_Threshold,S03,Shipping policy changed,ACCEPT,REJECT,Missed Major Shipping Drift,A major shipping change was accepted automatically.,10
+Policy_A_Threshold,S04,Cancellation policy changed,ACCEPT,REJECT,Missed Major Cancellation Drift,A major cancellation-policy change was accepted automatically.,10
+Policy_A_Threshold,S05,Safety response changed,ACCEPT,REJECT,Missed Safety Drift,A major safety response change was accepted automatically.,10
+Policy_A_Threshold,S08,Privacy behavior changed,ACCEPT,REJECT,Missed Privacy Drift,A major privacy behavior change was accepted automatically.,10
+Policy_A_Threshold,S09,Escalation behavior changed,ACCEPT,REJECT,Missed Escalation Drift,A major escalation behavior change was accepted automatically.,10
+Policy_A_Threshold,S10,Payment information changed,ACCEPT,REJECT,Missed Payment Drift,A major payment-information change was accepted automatically.,10
+Policy_A_Threshold,S11,Hallucination behavior changed,ACCEPT,REJECT,Missed Hallucination Drift,A major hallucination-protection change was accepted automatically.,10
+Policy_A_Threshold,S26,Temporary-looking factual drift,ACCEPT,REJECT,Missed Temporary Factual Drift,A major factual drift was accepted automatically.,10
+Policy_A_Threshold,S06,JSON format changed,ACCEPT,INVESTIGATE,Missed Format Drift,A minor response-format change was accepted instead of investigated.,3
+Policy_A_Threshold,S07,Tone changed,ACCEPT,INVESTIGATE,Missed Tone Drift,A minor tone change was accepted instead of investigated.,3
+Policy_A_Threshold,S12,Two factual changes,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Policy_A_Threshold,S13,Two policy changes,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Policy_A_Threshold,S14,Three major changes,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Policy_A_Threshold,S16,One minor tone change,ACCEPT,INVESTIGATE,Missed Minor Tone Drift,A minor tone change was accepted automatically.,3
+Policy_A_Threshold,S17,Two minor changes,ACCEPT,INVESTIGATE,Under-investigated Minor Drift,Two minor changes were accepted automatically.,3
+Policy_A_Threshold,S18,Missing refund response,ACCEPT,INVESTIGATE,Accepted Missing Critical Response,A missing refund response was accepted automatically.,3
+Policy_A_Threshold,S20,Unknown API status,ACCEPT,INVESTIGATE,Missed API Format Uncertainty,An API-format anomaly was accepted automatically.,3
+Policy_A_Threshold,S21,Everything stable except tone,ACCEPT,INVESTIGATE,Missed Tone Drift,A tone change was accepted automatically.,3
+Policy_A_Threshold,S22,One major and two minor changes,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Policy_A_Threshold,S23,Two major and one minor,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Policy_A_Threshold,S27,Policy and privacy failure,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3
+Policy_A_Threshold,S28,API outage behavior,ACCEPT,INVESTIGATE,Missed API Outage Behavior,An API outage behavior change was accepted automatically.,3
+Policy_A_Threshold,S30,Severe safety and privacy change,INVESTIGATE,REJECT,Incorrect Decision,The predicted action did not match the hidden gold label.,3

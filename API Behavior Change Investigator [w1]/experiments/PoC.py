@@ -2,6 +2,7 @@ import csv
 import json
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).parent
 
 PROBES_FILE = BASE_DIR / "probes.csv"
@@ -9,12 +10,15 @@ CURRENT_FILE = BASE_DIR / "current_responses.csv"
 OUTPUT_FILE = BASE_DIR / "agent_results.csv"
 
 
-# Load the probe definitions and baseline responses
 def load_probes():
 
     probes = {}
 
-    with open(PROBES_FILE, "r", encoding="utf-8") as file:
+    with open(
+        PROBES_FILE,
+        "r",
+        encoding="utf-8"
+    ) as file:
 
         reader = csv.DictReader(file)
 
@@ -24,22 +28,24 @@ def load_probes():
     return probes
 
 
-# Load the responses produced by the current API
-def load_current_responses():
+def load_scenarios():
 
-    responses = {}
+    scenarios = []
 
-    with open(CURRENT_FILE, "r", encoding="utf-8") as file:
+    with open(
+        CURRENT_FILE,
+        "r",
+        encoding="utf-8"
+    ) as file:
 
         reader = csv.DictReader(file)
 
         for row in reader:
-            responses[row["probe_id"]] = row["current_response"]
+            scenarios.append(row)
 
-    return responses
+    return scenarios
 
 
-# Normalize simple formatting differences
 def normalize_response(response):
 
     if response is None:
@@ -47,28 +53,34 @@ def normalize_response(response):
 
     response = response.strip()
 
-    # Try to normalize JSON responses
     try:
+
         data = json.loads(response)
-        return json.dumps(data, sort_keys=True)
+
+        return json.dumps(
+            data,
+            sort_keys=True
+        )
+
     except (json.JSONDecodeError, TypeError):
-        pass
 
-    return response.lower()
+        return response.lower()
 
 
-# Determine how serious a change is
-def classify_change(probe, current_response):
+def classify_change(probe, current):
 
-    baseline = probe["baseline_response"]
-
-    if current_response is None or current_response.strip() == "":
+    if current is None or current.strip() == "":
         return "missing"
 
-    old = normalize_response(baseline)
-    new = normalize_response(current_response)
+    baseline = normalize_response(
+        probe["baseline_response"]
+    )
 
-    if old == new:
+    current = normalize_response(
+        current
+    )
+
+    if baseline == current:
         return "none"
 
     if probe["severity"] == "major":
@@ -77,62 +89,65 @@ def classify_change(probe, current_response):
     return "minor"
 
 
-# Calculate the agent's belief
-def update_belief(major, minor, missing, total):
+def calculate_belief(probes, results):
 
-    # Major changes are strong evidence of behavior change
-    if major >= 2:
+    stable_score = 0.0
+    changed_score = 0.0
+    unknown_score = 0.0
+
+    for result in results:
+
+        probe = probes[result["probe_id"]]
+
+        severity = probe["severity"]
+        change = result["change_type"]
+
+        if severity == "major":
+            weight = 2.0
+        else:
+            weight = 1.0
+
+        if change == "none":
+
+            stable_score += weight
+
+        elif change == "major":
+
+            changed_score += weight * 2
+
+        elif change == "minor":
+
+            changed_score += weight
+            unknown_score += weight * 0.5
+
+        elif change == "missing":
+
+            unknown_score += weight * 2
+
+    total = (
+        stable_score
+        + changed_score
+        + unknown_score
+    )
+
+    if total == 0:
+
         return {
-            "stable": 0.05,
-            "changed": 0.90,
-            "unknown": 0.05
-        }
-
-    # One major change is suspicious
-    if major == 1:
-        return {
-            "stable": 0.20,
-            "changed": 0.55,
-            "unknown": 0.25
-        }
-
-    # Missing evidence means the agent cannot be confident
-    if missing > 0:
-        return {
-            "stable": 0.30,
-            "changed": 0.20,
-            "unknown": 0.50
-        }
-
-    # No changes
-    if minor == 0:
-        return {
-            "stable": 0.95,
-            "changed": 0.03,
-            "unknown": 0.02
-        }
-
-    # One or more minor changes
-    change_rate = minor / total
-
-    if change_rate <= 0.25:
-        return {
-            "stable": 0.45,
-            "changed": 0.20,
-            "unknown": 0.35
+            "stable": 0.0,
+            "changed": 0.0,
+            "unknown": 1.0
         }
 
     return {
-        "stable": 0.15,
-        "changed": 0.55,
-        "unknown": 0.30
+        "stable": stable_score / total,
+        "changed": changed_score / total,
+        "unknown": unknown_score / total
     }
 
 
-# Decide what the agent should do
 def choose_action(belief):
 
-    if belief["changed"] >= 0.80:
+    if belief["changed"] >= 0.60:
         return "REJECT"
 
     if belief["stable"] >= 0.80:
@@ -141,133 +156,121 @@ def choose_action(belief):
     return "INVESTIGATE"
 
 
-# Run the investigation
-def investigate(probes, current_responses):
+def investigate(probes, scenario):
 
     results = []
 
-    major = 0
-    minor = 0
-    missing = 0
-
     for probe_id, probe in probes.items():
 
-        current = current_responses.get(probe_id)
+        current = scenario.get(probe_id, "")
 
         change_type = classify_change(
             probe,
             current
         )
 
-        if change_type == "major":
-            major += 1
+        if change_type == "none":
+            probe_action = "ACCEPT"
 
-        elif change_type == "minor":
-            minor += 1
-
-        elif change_type == "missing":
-            missing += 1
+        else:
+            probe_action = "INVESTIGATE"
 
         results.append({
             "probe_id": probe_id,
             "category": probe["category"],
-            "purpose": probe["purpose"],
-            "baseline_response": probe["baseline_response"],
-            "current_response": current or "",
             "change_type": change_type,
+            "probe_action": probe_action,
+            "severity": probe["severity"]
         })
 
-    total = len(probes)
-
-    belief = update_belief(
-        major,
-        minor,
-        missing,
-        total
+    belief = calculate_belief(
+        probes,
+        results
     )
 
-    action = choose_action(belief)
+    overall_action = choose_action(
+        belief
+    )
 
-    return results, belief, action
+    return results, belief, overall_action
 
 
-# Export everything into a CSV
-def export_results(results, belief, action):
+def export_results(scenario_results):
 
-    with open(OUTPUT_FILE, "w", newline="", encoding="utf-8") as file:
+    fields = [
+        "scenario_id",
+        "description",
+        "stable_belief",
+        "changed_belief",
+        "unknown_belief",
+        "overall_action"
+    ]
 
-        fieldnames = [
-            "probe_id",
-            "category",
-            "purpose",
-            "baseline_response",
-            "current_response",
-            "change_type",
-            "stable_belief",
-            "changed_belief",
-            "unknown_belief",
-            "agent_action"
-        ]
+    with open(
+        OUTPUT_FILE,
+        "w",
+        newline="",
+        encoding="utf-8"
+    ) as file:
 
         writer = csv.DictWriter(
             file,
-            fieldnames=fieldnames
+            fieldnames=fields
         )
 
         writer.writeheader()
 
-        for result in results:
-
-            result["stable_belief"] = belief["stable"]
-            result["changed_belief"] = belief["changed"]
-            result["unknown_belief"] = belief["unknown"]
-            result["agent_action"] = action
-
+        for result in scenario_results:
             writer.writerow(result)
 
 
-# Main program
 def main():
 
     print("AI MODEL BEHAVIOR INVESTIGATOR")
-    print("-" * 40)
+    print("=" * 70)
 
     probes = load_probes()
+    scenarios = load_scenarios()
 
-    current_responses = load_current_responses()
+    scenario_results = []
 
-    results, belief, action = investigate(
-        probes,
-        current_responses
-    )
+    for scenario in scenarios:
 
-    print("\nInvestigation complete.")
+        scenario_id = scenario["scenario_id"]
+        description = scenario["description"]
 
-    print("\nBelief:")
+        results, belief, action = investigate(
+            probes,
+            scenario
+        )
 
-    print(
-        f"Stable:   {belief['stable']:.2f}"
-    )
+        print(f"\n{scenario_id} - {description}")
 
-    print(
-        f"Changed:  {belief['changed']:.2f}"
-    )
+        print(f"Stable:   {belief['stable']:.2f}")
+        print(f"Changed:  {belief['changed']:.2f}")
+        print(f"Unknown:  {belief['unknown']:.2f}")
+        print(f"Action:   {action}")
 
-    print(
-        f"Unknown:  {belief['unknown']:.2f}"
-    )
+        scenario_results.append({
+            "scenario_id": scenario_id,
+            "description": description,
+            "stable_belief": round(
+                belief["stable"], 3
+            ),
+            "changed_belief": round(
+                belief["changed"], 3
+            ),
+            "unknown_belief": round(
+                belief["unknown"], 3
+            ),
+            "overall_action": action
+        })
 
-    print("\nAgent action:", action)
+    export_results(scenario_results)
 
-    export_results(
-        results,
-        belief,
-        action
-    )
-
-    print(
-        f"\nResults exported to {OUTPUT_FILE}"
-    )
+    print("\n" + "=" * 70)
+    print(f"Completed {len(scenarios)} scenarios.")
+    print(f"Results saved to: {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

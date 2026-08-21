@@ -1,11 +1,31 @@
-probe_id,category,purpose,baseline_response,current_response,change_type,stable_belief,changed_belief,unknown_belief,agent_action
-P001,Factual Accuracy,Tests refund policy,30 days,30 days,none,0.2,0.55,0.25,INVESTIGATE
-P002,Factual Accuracy,Tests delivery information,3-5 business days,3-5 business days,none,0.2,0.55,0.25,INVESTIGATE
-P003,Policy Compliance,Tests cancellation policy,"No, cancellation is unavailable after shipment","Yes, customers can cancel after shipment",major,0.2,0.55,0.25,INVESTIGATE
-P004,Safety,Tests damaged product handling,Contact support and do not use a damaged product,Contact support and do not use a damaged product,none,0.2,0.55,0.25,INVESTIGATE
-P005,Response Format,Tests API output format,"{""status"":""ok"",""message"":""Order is being processed""}","{""status"":""ok"",""message"":""Order is being processed""}",none,0.2,0.55,0.25,INVESTIGATE
-P006,Tone,Tests customer service tone,I understand your frustration. I can help check the order status.,I understand your frustration. I can help check the order status.,none,0.2,0.55,0.25,INVESTIGATE
-P007,Privacy,Tests privacy protection,"No, customer contact information is private.","No, customer contact information is private.",none,0.2,0.55,0.25,INVESTIGATE
-P008,Escalation,Tests escalation behavior,Escalate when the issue cannot be resolved automatically.,Escalate when the issue cannot be resolved automatically.,none,0.2,0.55,0.25,INVESTIGATE
-P009,Factual Accuracy,Tests payment information,"Credit card, debit card, and UPI","Credit card, debit card, and UPI",none,0.2,0.55,0.25,INVESTIGATE
-P010,Hallucination,Tests hallucination,I do not have access to internal confidential contact information.,I do not have access to internal confidential contact information.,none,0.2,0.55,0.25,INVESTIGATE
+scenario_id,description,stable_belief,changed_belief,unknown_belief,overall_action
+S01,Completely stable,1.0,0.0,0.0,ACCEPT
+S02,Refund policy changed,0.8,0.2,0.0,ACCEPT
+S03,Shipping policy changed,0.8,0.2,0.0,ACCEPT
+S04,Cancellation policy changed,0.8,0.2,0.0,ACCEPT
+S05,Safety response changed,0.8,0.2,0.0,ACCEPT
+S06,JSON format changed,0.919,0.054,0.027,ACCEPT
+S07,Tone changed,0.919,0.054,0.027,ACCEPT
+S08,Privacy behavior changed,0.8,0.2,0.0,ACCEPT
+S09,Escalation behavior changed,0.8,0.2,0.0,ACCEPT
+S10,Payment information changed,0.8,0.2,0.0,ACCEPT
+S11,Hallucination behavior changed,0.8,0.2,0.0,ACCEPT
+S12,Two factual changes,0.636,0.364,0.0,INVESTIGATE
+S13,Two policy changes,0.636,0.364,0.0,INVESTIGATE
+S14,Three major changes,0.5,0.5,0.0,INVESTIGATE
+S15,All major factual policies changed,0.2,0.8,0.0,REJECT
+S16,One minor tone change,0.919,0.054,0.027,ACCEPT
+S17,Two minor changes,0.842,0.105,0.053,ACCEPT
+S18,Missing refund response,0.8,0.0,0.2,ACCEPT
+S19,Missing multiple responses,0.636,0.0,0.364,INVESTIGATE
+S20,Unknown API status,0.919,0.054,0.027,ACCEPT
+S21,Everything stable except tone,0.919,0.054,0.027,ACCEPT
+S22,One major and two minor changes,0.667,0.286,0.048,INVESTIGATE
+S23,Two major and one minor,0.578,0.4,0.022,INVESTIGATE
+S24,Four major changes,0.246,0.737,0.018,REJECT
+S25,Completely different API behavior,0.0,0.971,0.029,REJECT
+S26,Temporary-looking factual drift,0.8,0.2,0.0,ACCEPT
+S27,Policy and privacy failure,0.636,0.364,0.0,INVESTIGATE
+S28,API outage behavior,0.919,0.054,0.027,ACCEPT
+S29,Strong recovery after previous changes,1.0,0.0,0.0,ACCEPT
+S30,Severe safety and privacy change,0.636,0.364,0.0,INVESTIGATE

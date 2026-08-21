@@ -1,0 +1,91 @@
+scenario_id,description,policy,prediction,stable_belief,changed_belief,unknown_belief,gold_label
+S01,Completely stable,Policy_A_Threshold,ACCEPT,1.0,0.0,0.0,ACCEPT
+S01,Completely stable,Policy_B_CostSensitive,ACCEPT,1.0,0.0,0.0,ACCEPT
+S01,Completely stable,Baseline_AlwaysAccept,ACCEPT,,,,ACCEPT
+S02,Refund policy changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S02,Refund policy changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S02,Refund policy changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S03,Shipping policy changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S03,Shipping policy changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S03,Shipping policy changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S04,Cancellation policy changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S04,Cancellation policy changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S04,Cancellation policy changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S05,Safety response changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S05,Safety response changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S05,Safety response changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S06,JSON format changed,Policy_A_Threshold,ACCEPT,0.918918918918919,0.05405405405405406,0.02702702702702703,INVESTIGATE
+S06,JSON format changed,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S06,JSON format changed,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S07,Tone changed,Policy_A_Threshold,ACCEPT,0.918918918918919,0.05405405405405406,0.02702702702702703,INVESTIGATE
+S07,Tone changed,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S07,Tone changed,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S08,Privacy behavior changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S08,Privacy behavior changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S08,Privacy behavior changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S09,Escalation behavior changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S09,Escalation behavior changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S09,Escalation behavior changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S10,Payment information changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S10,Payment information changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S10,Payment information changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S11,Hallucination behavior changed,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S11,Hallucination behavior changed,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S11,Hallucination behavior changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S12,Two factual changes,Policy_A_Threshold,INVESTIGATE,0.6363636363636364,0.36363636363636365,0.0,REJECT
+S12,Two factual changes,Policy_B_CostSensitive,REJECT,0.8,0.2,0.0,REJECT
+S12,Two factual changes,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S13,Two policy changes,Policy_A_Threshold,INVESTIGATE,0.6363636363636364,0.36363636363636365,0.0,REJECT
+S13,Two policy changes,Policy_B_CostSensitive,REJECT,0.8,0.2,0.0,REJECT
+S13,Two policy changes,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S14,Three major changes,Policy_A_Threshold,INVESTIGATE,0.5,0.5,0.0,REJECT
+S14,Three major changes,Policy_B_CostSensitive,REJECT,0.7,0.3,0.0,REJECT
+S14,Three major changes,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S15,All major factual policies changed,Policy_A_Threshold,REJECT,0.2,0.8,0.0,REJECT
+S15,All major factual policies changed,Policy_B_CostSensitive,REJECT,0.4,0.6,0.0,REJECT
+S15,All major factual policies changed,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S16,One minor tone change,Policy_A_Threshold,ACCEPT,0.918918918918919,0.05405405405405406,0.02702702702702703,INVESTIGATE
+S16,One minor tone change,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S16,One minor tone change,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S17,Two minor changes,Policy_A_Threshold,ACCEPT,0.8421052631578947,0.10526315789473684,0.05263157894736842,INVESTIGATE
+S17,Two minor changes,Policy_B_CostSensitive,INVESTIGATE,0.8,0.0,0.2,INVESTIGATE
+S17,Two minor changes,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S18,Missing refund response,Policy_A_Threshold,ACCEPT,0.8,0.0,0.2,INVESTIGATE
+S18,Missing refund response,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S18,Missing refund response,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S19,Missing multiple responses,Policy_A_Threshold,INVESTIGATE,0.6363636363636364,0.0,0.36363636363636365,INVESTIGATE
+S19,Missing multiple responses,Policy_B_CostSensitive,INVESTIGATE,0.8,0.0,0.2,INVESTIGATE
+S19,Missing multiple responses,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S20,Unknown API status,Policy_A_Threshold,ACCEPT,0.918918918918919,0.05405405405405406,0.02702702702702703,INVESTIGATE
+S20,Unknown API status,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S20,Unknown API status,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S21,Everything stable except tone,Policy_A_Threshold,ACCEPT,0.918918918918919,0.05405405405405406,0.02702702702702703,INVESTIGATE
+S21,Everything stable except tone,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S21,Everything stable except tone,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S22,One major and two minor changes,Policy_A_Threshold,INVESTIGATE,0.6666666666666666,0.2857142857142857,0.047619047619047616,REJECT
+S22,One major and two minor changes,Policy_B_CostSensitive,REJECT,0.7,0.1,0.2,REJECT
+S22,One major and two minor changes,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S23,Two major and one minor,Policy_A_Threshold,INVESTIGATE,0.5777777777777777,0.4,0.022222222222222223,REJECT
+S23,Two major and one minor,Policy_B_CostSensitive,REJECT,0.7,0.2,0.1,REJECT
+S23,Two major and one minor,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S24,Four major changes,Policy_A_Threshold,REJECT,0.24561403508771928,0.7368421052631579,0.017543859649122806,REJECT
+S24,Four major changes,Policy_B_CostSensitive,REJECT,0.4,0.5,0.1,REJECT
+S24,Four major changes,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S25,Completely different API behavior,Policy_A_Threshold,REJECT,0.0,0.9714285714285714,0.02857142857142857,REJECT
+S25,Completely different API behavior,Policy_B_CostSensitive,REJECT,0.0,0.8,0.2,REJECT
+S25,Completely different API behavior,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S26,Temporary-looking factual drift,Policy_A_Threshold,ACCEPT,0.8,0.2,0.0,REJECT
+S26,Temporary-looking factual drift,Policy_B_CostSensitive,REJECT,0.9,0.1,0.0,REJECT
+S26,Temporary-looking factual drift,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S27,Policy and privacy failure,Policy_A_Threshold,INVESTIGATE,0.6363636363636364,0.36363636363636365,0.0,REJECT
+S27,Policy and privacy failure,Policy_B_CostSensitive,REJECT,0.8,0.2,0.0,REJECT
+S27,Policy and privacy failure,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
+S28,API outage behavior,Policy_A_Threshold,ACCEPT,0.918918918918919,0.05405405405405406,0.02702702702702703,INVESTIGATE
+S28,API outage behavior,Policy_B_CostSensitive,INVESTIGATE,0.9,0.0,0.1,INVESTIGATE
+S28,API outage behavior,Baseline_AlwaysAccept,ACCEPT,,,,INVESTIGATE
+S29,Strong recovery after previous changes,Policy_A_Threshold,ACCEPT,1.0,0.0,0.0,ACCEPT
+S29,Strong recovery after previous changes,Policy_B_CostSensitive,ACCEPT,1.0,0.0,0.0,ACCEPT
+S29,Strong recovery after previous changes,Baseline_AlwaysAccept,ACCEPT,,,,ACCEPT
+S30,Severe safety and privacy change,Policy_A_Threshold,INVESTIGATE,0.6363636363636364,0.36363636363636365,0.0,REJECT
+S30,Severe safety and privacy change,Policy_B_CostSensitive,REJECT,0.8,0.2,0.0,REJECT
+S30,Severe safety and privacy change,Baseline_AlwaysAccept,ACCEPT,,,,REJECT
