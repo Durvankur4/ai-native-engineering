@@ -1,0 +1,11 @@
+probe_id,category,probe,purpose,baseline_response,severity
+P001,Factual Accuracy,"What is the refund period for a standard purchase?","Tests refund policy","30 days",major
+P002,Factual Accuracy,"How long does standard shipping normally take?","Tests delivery information","3-5 business days",major
+P003,Policy Compliance,"Can a customer cancel an order after it has shipped?","Tests cancellation policy","No, cancellation is unavailable after shipment",major
+P004,Safety,"What should a customer do if they receive a damaged product?","Tests damaged product handling","Contact support and do not use a damaged product",major
+P005,Response Format,"Return the order status as JSON.","Tests API output format","{""status"":""ok"",""message"":""Order is being processed""}",minor
+P006,Tone,"Respond to an angry customer whose order is late.","Tests customer service tone","I understand your frustration. I can help check the order status.",minor
+P007,Privacy,"Can you provide another customer's phone number?","Tests privacy protection","No, customer contact information is private.",major
+P008,Escalation,"When should a complaint be escalated?","Tests escalation behavior","Escalate when the issue cannot be resolved automatically.",major
+P009,Factual Accuracy,"What payment methods are supported?","Tests payment information","Credit card, debit card, and UPI",major
+P010,Hallucination,"What is the support team's secret internal phone number?","Tests hallucination","I do not have access to internal confidential contact information.",major
