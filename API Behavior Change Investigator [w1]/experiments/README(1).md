@@ -95,10 +95,11 @@ model_behavior_agent_test/
 ├── probes.csv
 ├── current_responses.csv
 ├── README.md
-└── generated after execution/
-    ├── evaluation_results.csv
-    ├── probe_actions.csv
-    └── failure_analysis.csv
+
+generated after execution
+├── evaluation_results.csv
+├── probe_actions.csv
+└── failure_analysis.csv
 ```
 
 ## Requirements
