@@ -1,0 +1,10 @@
+| Sr. No. | Platform | Post Link | Human Answer | My Next Answer | Design Change |
+|---:|---|---|---|---|---|
+| 1 | Reddit | [Post](https://www.reddit.com/r/agenticAI/comments/1vr0mif/modelapi_behaviour_change_investigator_feedback/) | Systems that infer the hidden state of a model from its outputs are always going to be vulnerable to the same drift and instability as the model they’re monitoring. If the monitored agent changes its behavior under context, framing, or adversarial pressure, an inference-based observer will change with it. And if the enterprise wants “expected results,”... | Yeah, I cannot infer the internal state of the model in question. | Cannot know the internal state of the model. I can only measure the output the LLM gives and compare it against a predefined baseline. |
+| 2 | X | [Post](https://x.com/durvankurx/status/2090110561417924924) | Without a fixed prompt set and decoding settings, you'll mostly measure sampling noise. | So I should improve the baseline and drift calculation methods and maintain a history of score changes to know when the model degraded. | Make sure the scores are calculated properly. |
+| 3 | Reddit | [Post](https://www.reddit.com/r/ArtificialInteligence/comments/1vtjlmb/model_behaviour_change_detection_for_llm_blackbox/) | — | — | — |
+| 4 | Reddit | [Post](https://www.reddit.com/r/LLMDevs/comments/1vw1vav/building_a_monitor_for_silent_llm_degradation_i/) | — | — | — |
+| 5 | Reddit | [Post](https://www.reddit.com/r/learnmachinelearning/comments/1wahfix/hidden_state_missing_from_this_blackbox_llm/) | — | — | — |
+| 6 | Reddit | [Post](https://www.reddit.com/r/mlops/comments/1wahi89/thinking_about_blackbox_llm_monitoring_as_a/) | — | — | — |
+| 7 | Reddit | [Post](https://www.reddit.com/r/LLMDevs/comments/1wahkh8/building_an_active_monitor_for_a_blackbox_llm/) | — | — | — |
+| 8 | X | [Post](https://x.com/durvankurx/status/2097227360844259366) | — | — | — |
