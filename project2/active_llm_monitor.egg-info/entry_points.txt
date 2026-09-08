@@ -1,0 +1,2 @@
+[console_scripts]
+llm-monitor = src.cli:main

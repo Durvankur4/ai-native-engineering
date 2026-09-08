@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: active-llm-monitor
+Version: 0.1.0
+Summary: Cost-sensitive black-box LLM monitoring agent for Week 1
+Requires-Python: >=3.10
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: scikit-learn>=1.3

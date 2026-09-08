@@ -1,0 +1,51 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\title{Active Cost-Sensitive Monitoring of Black-Box LLM Behavior}
+\author{Week 1 Project Prototype}
+\date{}
+\begin{document}
+\maketitle
+\begin{abstract}
+We design a small monitoring agent for externally observable language-model behavior when the true model state is hidden. The agent maintains a belief over stable behavior, persistent degradation, transient anomalies, and distribution shift, then selects ACCEPT, INVESTIGATE, or REJECT using an explicit cost model. A deterministic 50-case simulation compares a static threshold baseline, a binary belief policy, and an active policy that can purchase additional evidence under a bounded investigation budget. The experiment is a reproducible engineering test, not a production deployment claim.
+\end{abstract}
+
+\section{Introduction}
+Hosted LLM services can change behavior over time even when the service appears to expose the same model family, motivating continuous external evaluation \cite{chen2023llmdrift}. The Week 1 problem is therefore: the agent observes external LLM inputs, outputs, evaluation signals, and runtime evidence and must choose an action because the provider-side state is not directly visible.
+
+\section{Related Work and User Discussions}
+The LLMDrift work provides historical generations and evaluation evidence for studying behavior changes over time \cite{chen2023llmdrift}. Public discussions for this project also identified three engineering constraints: the monitor cannot infer internal model state, baseline scores must be computed consistently, and investigation must have a stopping budget.
+
+\section{Agent Design}
+Observable evidence includes task quality, semantic drift, formatting/safety changes, latency, and error rate. Hidden states are $S=\{stable,degraded,transient,distribution\_shift\}$. The belief vector $b(s)$ is updated by a naive-Bayes-style likelihood model:
+\[
+b'(s) \propto b(s)\prod_i P(e_i\mid s).
+\]
+The actions are ACCEPT, INVESTIGATE, and REJECT. INVESTIGATE obtains an additional independent probe and is capped at two rounds.
+
+\section{Probability Model and Decision Rule}
+The action model is cost-sensitive. False acceptance is assigned the highest provisional cost, followed by false rejection and then investigation. Direct actions compare expected false-accept and false-reject loss. Investigation is selected when its estimated one-step value of information exceeds its fixed cost.
+
+\section{Test Method}
+We generate 50 labeled simulation cases with five task categories. The cases include stable behavior, persistent degradation, transient anomalies, and distribution shift. We compare a static quality threshold, a binary policy, and the active policy. All cases use a fixed seed.
+
+\section{Results}
+See the generated table in \texttt{results/policy\_metrics.csv}. The experiment measures false accepts, false rejects, investigation rate, decision cost, degradation precision, and recall.
+
+\section{Failure Analysis}
+The active policy's highest-cost errors are exported to \texttt{results/five\_failure\_cases.csv}. Typical failure modes include weak evidence concentration, ambiguous transient signals, and distribution-shift cases that preserve average quality.
+
+\section{Limitations, Ethics, and Human Control}
+The likelihoods and costs are hypotheses, not calibrated production statistics. The synthetic cases are not historical incidents. A real deployment must validate judge reliability, calibrate thresholds, use comparable historical traces, and keep high-impact decisions under human control.
+
+\section{Conclusion and New Questions}
+The prototype tests whether active evidence collection can reduce false acceptance without making investigation excessive. The next experiment should replay public historical LLM generations and compare monitor decisions with human-reviewed labels.
+
+\section*{AI-use statement}
+AI tools were used to structure the research workflow, identify design gaps, and assist with code drafting/review. The project owner is responsible for the selected problem, evidence checks, experiments, interpretation, and public claims.
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}

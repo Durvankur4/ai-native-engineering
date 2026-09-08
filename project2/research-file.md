@@ -1,4 +1,4 @@
-# Week 1 Project File
+# LLM Monitoring/Observability Agent
 
 ## 1. Project identity
 

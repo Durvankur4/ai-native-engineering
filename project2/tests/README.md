@@ -1,0 +1,1 @@
+Run with: `python -m pytest -q` if pytest is installed. The core experiment itself needs only Python + pandas/numpy.

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "active-llm-monitor"
+version = "0.1.0"
+description = "Cost-sensitive black-box LLM monitoring agent for Week 1"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24", "pandas>=2.0", "scikit-learn>=1.3"]
+
+[project.scripts]
+llm-monitor = "src.cli:main"
+
+[tool.setuptools]
+packages = ["src"]

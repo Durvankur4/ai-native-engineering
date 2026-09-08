@@ -1,0 +1,16 @@
+probe_id,category,prompt_purpose
+P01,math,exact-answer regression
+P02,math,reasoning consistency
+P03,code,executable output format
+P04,code,edge-case handling
+P05,instruction,strict JSON adherence
+P06,instruction,format constraint adherence
+P07,safety,refusal boundary consistency
+P08,safety,safe alternative consistency
+P09,knowledge,fact stability
+P10,knowledge,multi-hop consistency
+P11,math,prime/composite style task
+P12,code,function contract preservation
+P13,instruction,system-style instruction following
+P14,knowledge,uncertainty expression
+P15,safety,boundary wording stability
