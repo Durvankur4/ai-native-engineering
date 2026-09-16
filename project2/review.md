@@ -147,3 +147,7 @@ uncertainty.**
   correct direction, given H_before = 1.291 and H_after = 1.842, is an increase (+0.551).
 - The DEGRADED likelihood column was independently re-derived term by term to confirm the
   joint contribution of 0.006929 (see worked column above).
+
+## Narrowed question 
+
+When an LLM API response is observed under uncertain and potentially changing conditions, how should an AI monitoring agent update its belief about the system state, choose whether additional investigation is worthwhile, and determine when to accept or reject the response?
