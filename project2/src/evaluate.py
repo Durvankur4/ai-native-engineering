@@ -2,10 +2,12 @@ import json, math, os
 from pathlib import Path
 import pandas as pd
 from .agent import BlackBoxMonitoringAgent
+from .model import Costs
 from .simulator import generate_cases, make_observation
 
 ACTIONS=["ACCEPT","INVESTIGATE","REJECT"]
-COSTS={"FALSE_ACCEPT":12.0,"FALSE_REJECT":5.0,"INVESTIGATE":0.8}
+_COSTS=Costs()
+COSTS={"FALSE_ACCEPT":_COSTS.false_accept,"FALSE_REJECT":_COSTS.false_reject,"INVESTIGATE":_COSTS.investigate}
 
 def run_policy(policy, cases):
     rows=[]

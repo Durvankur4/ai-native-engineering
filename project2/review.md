@@ -129,13 +129,60 @@ uncertainty.**
 
 ---
 
+## Stage 4 — Cost-derived decision threshold
+
+The Week 2 cost table is hypothetical and defines the binary decision loss as:
+
+- Correct `ACCEPT` = 0
+- Correct `REJECT` = 0
+- `INVESTIGATE` = 1
+- False `REJECT` = 3
+- False `ACCEPT` of degradation = 10
+
+For a posterior probability `p = P(DEGRADED | E)`, accepting has expected cost `10p`. Rejecting has expected cost `3(1-p)`. At the break-even point:
+
+```text
+10p = 3(1-p)
+10p = 3 - 3p
+13p = 3
+p = 3/13 = 0.230769...
+```
+
+Therefore the cost-derived rule is:
+
+- `P(DEGRADED | E) <= 23.08%` → `ACCEPT`
+- `P(DEGRADED | E) > 23.08%` → `REJECT`
+
+The tie at exactly 23.08% is assigned to `ACCEPT` because the implementation uses `accept_cost <= reject_cost`. This is the threshold implied by the documented 0/1/3/10 table, not a generic 0.5 cutoff.
+
+### Implementation check
+
+The previous `decide_binary()` did **not** implement this threshold. It used:
+
+```text
+12 × P(DEGRADED) + 0.35 × 12 × P(TRANSIENT)
+vs.
+5 × (P(STABLE) + 0.5 × P(DISTRIBUTION_SHIFT))
+```
+
+so there was no single break-even threshold on `P(DEGRADED)`. In the simplified STABLE/DEGRADED-only case, those old defaults would give `p = 5/17 = 29.41%`, which also did not match the documented cost table.
+
+The implementation has now been aligned to the documented costs: `false_accept=10`, `false_reject=3`, `investigate=1`. The unused `accept_threshold` and `reject_threshold` constructor parameters were removed; `MonitorPolicy.reject_posterior_threshold` derives the threshold directly from the costs.
+
+### Search and escalation rules
+
+**Stop searching:** stop investigating when the estimated value of the next probe is no longer positive after paying the investigation cost, or when the maximum probe budget of two rounds has been reached. At that point, use the same cost-derived `ACCEPT`/`REJECT` rule.
+
+**Human escalation:** in a real deployment, escalate rather than automate the final action when, after the available probe budget is exhausted, the minimum expected loss of `ACCEPT` or `REJECT` is still greater than the human-review cost (2 in the current hypothetical table). The current code treats human review as a deployment boundary rather than an emitted action.
+
+
 ## Open Items / Known Gaps (for Limitations section)
 
 - [ ] Priors (0.72/0.12/0.08/0.08) are hypothetical, not counted from data — label accordingly.
 - [ ] `DISTRIBUTION_SHIFT` is not independently generated/validated in the simulator — belief
       is computed but not checked against ground truth. Do not use for detection-performance claims.
 - [ ] Conditional independence of the six evidence signals given state is assumed, not tested.
-- [ ] Stage 4 (information value vs. cost, decision threshold) — not started.
+- [x] Stage 4 (information value vs. cost, decision threshold) — cost threshold derived and implemented.
 - [ ] Stages 5–11 (thresholds, umbrella problem, extensions, experiment, failure analysis,
       paper, social posts) — not started.
 
@@ -147,7 +194,3 @@ uncertainty.**
   correct direction, given H_before = 1.291 and H_after = 1.842, is an increase (+0.551).
 - The DEGRADED likelihood column was independently re-derived term by term to confirm the
   joint contribution of 0.006929 (see worked column above).
-
-## Narrowed question 
-
-When an LLM API response is observed under uncertain and potentially changing conditions, how should an AI monitoring agent update its belief about the system state, choose whether additional investigation is worthwhile, and determine when to accept or reject the response?

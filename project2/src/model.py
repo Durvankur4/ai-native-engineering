@@ -20,9 +20,11 @@ LIKELIHOODS = {
 
 @dataclass(frozen=True)
 class Costs:
-    false_accept: float = 12.0
-    false_reject: float = 5.0
-    investigate: float = 0.8
+    # Week 2 decision table: correct actions = 0, investigate = 1,
+    # false reject = 3, false accept of degradation = 10.
+    false_accept: float = 10.0
+    false_reject: float = 3.0
+    investigate: float = 1.0
     human_escalation: float = 2.0
 
 @dataclass
@@ -69,24 +71,27 @@ class Decision:
     belief: Dict[str,float]
 
 class MonitorPolicy:
-    def __init__(self, costs: Costs=None, reject_threshold: float=0.55, accept_threshold: float=0.20, max_probe_rounds: int=2):
+    def __init__(self, costs: Costs=None, max_probe_rounds: int=2):
         self.costs=costs or Costs()
-        self.reject_threshold=reject_threshold
-        self.accept_threshold=accept_threshold
         self.max_probe_rounds=max_probe_rounds
 
+    @property
+    def reject_posterior_threshold(self) -> float:
+        # Solve p*C_FA = (1-p)*C_FR.
+        return self.costs.false_reject / (self.costs.false_accept + self.costs.false_reject)
+
     def immediate_risk_costs(self, belief: BeliefState) -> Tuple[float,float]:
-        unsafe=belief.unsafe_probability
-        # Distribution shift is not always unsafe, so it carries half of degraded cost.
-        false_accept=belief.degraded_probability*self.costs.false_accept + belief.transient_probability*0.35*self.costs.false_accept
-        false_reject=(belief.probs["STABLE"]+0.5*belief.probs["DISTRIBUTION_SHIFT"])*self.costs.false_reject
-        return false_accept,false_reject
+        # The Week 2 cost table defines the binary bad state as DEGRADED.
+        p_degraded=belief.degraded_probability
+        accept_cost=p_degraded*self.costs.false_accept
+        reject_cost=(1-p_degraded)*self.costs.false_reject
+        return accept_cost,reject_cost
 
     def decide_binary(self, belief: BeliefState) -> Decision:
         fa,fr=self.immediate_risk_costs(belief)
-        if fa <= fr:
-            return Decision("ACCEPT",fa,"binary threshold: expected false-accept cost <= false-reject cost",dict(belief.probs))
-        return Decision("REJECT",fr,"binary threshold: expected false-reject cost < false-accept cost",dict(belief.probs))
+        if fa <= fr + 1e-12:
+            return Decision("ACCEPT",fa,"binary cost rule: expected false-accept cost <= false-reject cost",dict(belief.probs))
+        return Decision("REJECT",fr,"binary cost rule: expected false-reject cost < false-accept cost",dict(belief.probs))
 
     def _posterior_after(self, belief: BeliefState, ev: str, present: bool) -> BeliefState:
         b=BeliefState(dict(belief.probs))

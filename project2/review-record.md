@@ -95,7 +95,7 @@ The three reviews converge on the following changes:
 - [x] Create a probability decision record.
 - [x] Maintain an explicit human-control boundary.
 - [x] Clearly separate synthetic results from production evidence.
-- [ ] Remove or implement unused `accept_threshold` / `reject_threshold` parameters.
+- [x] Remove or implement unused `accept_threshold` / `reject_threshold` parameters.
 - [ ] Decide whether `feedback_rate` is a real evidence signal or should be removed.
 
 ### Next experiment

@@ -33,13 +33,16 @@ The agent multiplies the prior by the corresponding likelihood for each observed
 
 ## Investigation
 
-The active policy computes a one-step expected value of information for candidate probes. It compares the expected reduction in decision loss against the fixed investigation cost (`0.8`). The investigation budget is bounded at two rounds.
+The active policy computes a one-step expected value of information for candidate probes. It compares the expected reduction in decision loss against the fixed investigation cost (`1`). The investigation budget is bounded at two rounds.
 
 ## Decision rule
 
-- high expected false-accept cost → reject or investigate;
-- low evidence but meaningful uncertainty → investigate;
-- stable evidence with low expected loss → accept.
+For the documented 0/1/3/10 table, let `p = P(DEGRADED | E)`. `ACCEPT` has expected cost `10p`; `REJECT` has expected cost `3(1-p)`. Break-even is `10p = 3(1-p)`, so `p = 3/13 = 23.08%`.
+
+- `p <= 23.08%` → `ACCEPT`
+- `p > 23.08%` → `REJECT`
+
+The active policy may choose `INVESTIGATE` first when the estimated value of the next probe is positive after paying the investigation cost. Search stops when value-of-information is no longer positive or the two-round probe budget is exhausted.
 
 The exact threshold is therefore cost-sensitive rather than a generic 0.5 probability cutoff.
 

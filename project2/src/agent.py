@@ -23,10 +23,10 @@ class Observation:
         return ev
 
 class BlackBoxMonitoringAgent:
-    def __init__(self, prior=None, costs=None, reject_threshold=0.55, accept_threshold=0.20, max_probe_rounds=2):
+    def __init__(self, prior=None, costs=None, max_probe_rounds=2):
         self.prior=prior or {"STABLE":0.72,"DEGRADED":0.12,"TRANSIENT":0.08,"DISTRIBUTION_SHIFT":0.08}
         self.costs=costs or Costs()
-        self.policy=MonitorPolicy(self.costs,reject_threshold,accept_threshold,max_probe_rounds)
+        self.policy=MonitorPolicy(self.costs,max_probe_rounds)
         self.memory=[]
 
     def initial_belief(self):

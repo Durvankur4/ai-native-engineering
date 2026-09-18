@@ -26,3 +26,18 @@ def test_memory_records_observation():
     a=BlackBoxMonitoringAgent()
     a.act(Observation(.9,.05,0,0,400,.01))
     assert len(a.memory)==1
+
+
+def test_cost_derived_reject_threshold():
+    from src.model import Costs, MonitorPolicy
+    policy=MonitorPolicy(Costs())
+    assert abs(policy.reject_posterior_threshold - (3/13)) < 1e-12
+
+
+def test_binary_decision_matches_cost_threshold():
+    policy=__import__('src.model',fromlist=['MonitorPolicy']).MonitorPolicy()
+    threshold=policy.reject_posterior_threshold
+    from src.model import BeliefState
+    assert policy.decide_binary(BeliefState({"STABLE":1-threshold,"DEGRADED":threshold,"TRANSIENT":0,"DISTRIBUTION_SHIFT":0})).action == "ACCEPT"
+    above=threshold+0.01
+    assert policy.decide_binary(BeliefState({"STABLE":1-above,"DEGRADED":above,"TRANSIENT":0,"DISTRIBUTION_SHIFT":0})).action == "REJECT"
