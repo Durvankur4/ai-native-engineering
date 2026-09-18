@@ -1,29 +1,35 @@
-{
-  "baseline": {
+[
+  {
+    "policy": "baseline",
     "n": 120,
     "false_accept": 23,
     "false_reject": 4,
+    "investigations": 0,
     "investigation_rate": 0.0,
     "decision_cost": 242.0,
-    "degradation_recall": 0.5490196078431373,
-    "degradation_precision": 0.875
+    "recall": 0.5490196078431373,
+    "precision": 0.875
   },
-  "binary": {
+  {
+    "policy": "binary",
     "n": 120,
     "false_accept": 21,
     "false_reject": 4,
+    "investigations": 0,
     "investigation_rate": 0.0,
     "decision_cost": 222.0,
-    "degradation_recall": 0.5882352941176471,
-    "degradation_precision": 0.8823529411764706
+    "recall": 0.5882352941176471,
+    "precision": 0.8823529411764706
   },
-  "active": {
+  {
+    "policy": "active",
     "n": 120,
     "false_accept": 21,
     "false_reject": 4,
+    "investigations": 0,
     "investigation_rate": 0.0,
     "decision_cost": 222.0,
-    "degradation_recall": 0.5882352941176471,
-    "degradation_precision": 0.8823529411764706
+    "recall": 0.5882352941176471,
+    "precision": 0.8823529411764706
   }
-}
+]

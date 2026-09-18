@@ -194,3 +194,17 @@ The implementation has now been aligned to the documented costs: `false_accept=1
   correct direction, given H_before = 1.291 and H_after = 1.842, is an increase (+0.551).
 - The DEGRADED likelihood column was independently re-derived term by term to confirm the
   joint contribution of 0.006929 (see worked column above).
+
+## Stage 18 — Scale experiment to 120 cases
+
+The simulator was extended from 50 to 120 cases with the random seed fixed at `7`. The original 50-case scenario structure is repeated so the first 50 cases remain reproducible; additional cases are newly sampled from the same state-specific observation generator. Baseline, binary, and active policies were run on the same generated cases.
+
+| Policy | Cases | False ACCEPT | False REJECT | Investigations | Investigation rate | Decision cost | Recall | Precision |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| baseline | 120 | 23 | 4 | 0 | 0% | 242.0 | 0.549 | 0.875 |
+| binary | 120 | 21 | 4 | 0 | 0% | 222.0 | 0.588 | 0.882 |
+| active | 120 | 21 | 4 | 0 | 0% | 222.0 | 0.588 | 0.882 |
+
+Figure: `results/scale_120_policy_comparison.png`
+
+The active policy did not select `INVESTIGATE` in the 120-case run, so its results are identical to the binary policy. This is a simulator-based scaling check; it does not establish production performance.

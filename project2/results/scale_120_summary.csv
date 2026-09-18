@@ -1,0 +1,4 @@
+policy,n,false_accept,false_reject,investigations,investigation_rate,decision_cost,recall,precision
+baseline,120,23,4,0,0.0,242.0,0.5490196078431373,0.875
+binary,120,21,4,0,0.0,222.0,0.5882352941176471,0.8823529411764706
+active,120,21,4,0,0.0,222.0,0.5882352941176471,0.8823529411764706

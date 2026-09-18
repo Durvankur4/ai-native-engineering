@@ -67,8 +67,8 @@ def metrics(df):
     recall=detections/actual if actual else 0
     return {"n":n,"false_accept":int(fa),"false_reject":int(fr),"investigation_rate":inv/n,"decision_cost":float(df.cost.sum()),"degradation_recall":recall,"degradation_precision":precision}
 
-def main(out_dir="results"):
-    cases=generate_cases()
+def main(out_dir="results", n_cases=120, seed=7):
+    cases=generate_cases(n=n_cases, seed=seed)
     out=Path(out_dir); out.mkdir(parents=True,exist_ok=True)
     all_metrics={}
     for policy in ["baseline","binary","active"]:
