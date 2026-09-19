@@ -1,0 +1,29 @@
+{
+  "baseline": {
+    "n": 50,
+    "false_accept": 9,
+    "false_reject": 3,
+    "investigation_rate": 0.0,
+    "decision_cost": 99.0,
+    "degradation_recall": 0.6086956521739131,
+    "degradation_precision": 0.8235294117647058
+  },
+  "binary": {
+    "n": 50,
+    "false_accept": 7,
+    "false_reject": 3,
+    "investigation_rate": 0.0,
+    "decision_cost": 79.0,
+    "degradation_recall": 0.6956521739130435,
+    "degradation_precision": 0.8421052631578947
+  },
+  "active": {
+    "n": 50,
+    "false_accept": 1,
+    "false_reject": 3,
+    "investigation_rate": 0.22,
+    "decision_cost": 27.8,
+    "degradation_recall": 0.9565217391304348,
+    "degradation_precision": 0.88
+  }
+}

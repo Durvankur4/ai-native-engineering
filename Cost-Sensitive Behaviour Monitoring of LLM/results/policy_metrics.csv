@@ -1,0 +1,4 @@
+,n,false_accept,false_reject,investigation_rate,decision_cost,degradation_recall,degradation_precision
+baseline,50.0,9.0,3.0,0.0,99.0,0.6086956521739131,0.8235294117647058
+binary,50.0,7.0,3.0,0.0,79.0,0.6956521739130435,0.8421052631578947
+active,50.0,1.0,3.0,0.22,27.8,0.9565217391304348,0.88

@@ -1,0 +1,35 @@
+[
+  {
+    "policy": "baseline",
+    "n": 120,
+    "false_accept": 23,
+    "false_reject": 4,
+    "investigations": 0,
+    "investigation_rate": 0.0,
+    "decision_cost": 242.0,
+    "recall": 0.5490196078431373,
+    "precision": 0.875
+  },
+  {
+    "policy": "binary",
+    "n": 120,
+    "false_accept": 21,
+    "false_reject": 4,
+    "investigations": 0,
+    "investigation_rate": 0.0,
+    "decision_cost": 222.0,
+    "recall": 0.5882352941176471,
+    "precision": 0.8823529411764706
+  },
+  {
+    "policy": "active",
+    "n": 120,
+    "false_accept": 10,
+    "false_reject": 4,
+    "investigations": 31,
+    "investigation_rate": 0.25833333333333336,
+    "decision_cost": 136.8,
+    "recall": 0.803921568627451,
+    "precision": 0.9111111111111111
+  }
+]

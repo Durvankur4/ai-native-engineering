@@ -1,0 +1,1 @@
+Development seeds: [100, 101, 102, 103, 104]. Test seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]. Candidate investigation costs: [0.4, 0.6, 0.8, 1.0, 1.2]. Selected cost from development only: 0.4. The 20 test seeds were not used for cost selection.

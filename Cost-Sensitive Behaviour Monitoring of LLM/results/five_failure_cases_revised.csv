@@ -1,0 +1,6 @@
+scope,seed,case_id,state,category,failure_class,evidence,action,cost,interpretation
+case,7,case-037,DISTRIBUTION_SHIFT,instruction,distribution_shift_under_detection,"quality=0.704, semantic_drift=0.281; capability probe negative",ACCEPT,6.4,"The joint signature favors STABLE and the targeted capability probe does not resolve a distribution shift."
+case,7,case-027,STABLE,instruction,correlated_evidence_false_reject,"quality=0.890, semantic_drift=0.399",REJECT,3.0,"Correlated semantic evidence is sufficient to move belief toward distribution shift even though the hidden state is STABLE."
+case,7,case-001,STABLE,math,unnecessary_acquisition,"high-confidence stable signature; capability probe selected",ACCEPT,0.4,"The probe is decision-improving under the synthetic cost model but is operationally unnecessary for a clearly stable case."
+case,2,case-082,TRANSIENT,math,transient_under_detection,"quality=0.759, semantic_drift=0.114",ACCEPT,4.0,"A transient latency-centered anomaly can remain compatible with healthy quality and low semantic drift."
+policy,dev/test,,ALL,ALL,investigation_cost_cliff,"cost 0.4 and 0.6 retain high investigation; 0.8 sharply suppresses probes",ACTIVE,89.0,"A small change in hypothetical acquisition cost changes the active policy regime, motivating separate development-set cost selection."
